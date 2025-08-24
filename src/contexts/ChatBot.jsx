@@ -191,20 +191,20 @@ return (
 
     {open && (
       <div
-        className={`fixed bottom-20 right-6 w-80 h-[480px] shadow-2xl rounded-2xl p-4 z-[1000] flex flex-col transition-all duration-300 
+        className={`fixed bottom-20 inset-x-2 sm:right-6 sm:inset-x-auto w-full max-w-sm h-[70vh] sm:h-[480px] shadow-2xl rounded-2xl p-3 sm:p-4 z-[1000] flex flex-col transition-all duration-300
         ${isDarkMode 
           ? "bg-gradient-to-br from-gray-900/90 via-gray-800/80 to-gray-900/70 text-gray-100 backdrop-blur-xl border border-gray-700/40" 
           : "bg-gradient-to-br from-white/90 via-blue-50/80 to-white/70 text-gray-800 backdrop-blur-xl border border-gray-200/40"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold flex items-center gap-2 text-sm">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 className="font-semibold flex items-center gap-2 text-xs sm:text-sm">
             🤖 Salary Bot
           </h3>
           <button
             onClick={() => setOpen(false)}
-            className={`hover:opacity-80 transition-colors ${isDarkMode ? "text-gray-300" : "text-gray-500"}`}
+            className={`hover:opacity-80 transition-colors text-sm sm:text-base ${isDarkMode ? "text-gray-300" : "text-gray-500"}`}
           >
             ✕
           </button>
@@ -219,7 +219,7 @@ return (
             >
               {msg.sender === "bot" && (
                 <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs mr-1
+                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] sm:text-xs mr-1
                   ${isDarkMode ? "bg-gray-700" : "bg-gray-300"}`}
                 >
                   🤖
@@ -227,7 +227,7 @@ return (
               )}
 
               <div
-                className={`p-2 rounded-2xl max-w-[70%] text-sm shadow-sm
+                className={`p-2 rounded-2xl max-w-[75%] text-xs sm:text-sm shadow-sm
                   ${msg.sender === "user"
                     ? isDarkMode
                       ? "bg-teal-500 text-white"
@@ -242,7 +242,7 @@ return (
 
               {msg.sender === "user" && (
                 <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ml-1
+                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] sm:text-xs ml-1
                   ${isDarkMode ? "bg-teal-500 text-white" : "bg-blue-500 text-white"}`}
                 >
                   👤
@@ -255,13 +255,13 @@ return (
           {typing && (
             <div className="flex items-end">
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs mr-1
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] sm:text-xs mr-1
                 ${isDarkMode ? "bg-gray-700" : "bg-gray-300"}`}
               >
                 🤖
               </div>
               <div
-                className={`p-2 rounded-xl max-w-[50%] text-sm flex gap-1
+                className={`p-2 rounded-xl max-w-[55%] text-xs sm:text-sm flex gap-1
                 ${isDarkMode ? "bg-gray-800/80 text-gray-100" : "bg-gray-100/90 text-gray-800"}`}
               >
                 <span className="animate-bounce">.</span>
@@ -275,14 +275,14 @@ return (
         </div>
 
         {/* Input */}
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-1 sm:gap-2 mt-auto">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-            placeholder="Type a question..."
-            className={`flex-1 border rounded-full px-3 py-1 text-sm focus:outline-none focus:ring-2
+            placeholder="Type..."
+            className={`flex-1 border rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2
             ${isDarkMode
               ? "bg-gray-900/50 text-gray-100 border-gray-600 focus:ring-teal-400"
               : "bg-white/70 text-black border-gray-300 focus:ring-blue-400"
@@ -290,7 +290,7 @@ return (
           />
           <button
             onClick={() => sendMessage(input)}
-            className={`rounded-full px-3 py-1 text-sm font-medium shadow-md transition-transform hover:scale-105
+            className={`rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium shadow-md transition-transform hover:scale-105
               ${isDarkMode
                 ? "bg-teal-500 hover:bg-teal-600 text-white"
                 : "bg-blue-500 hover:bg-blue-600 text-white"
@@ -301,12 +301,12 @@ return (
         </div>
 
         {/* FAQ Suggestions */}
-        <div className="flex flex-wrap gap-1 mt-3">
+        <div className="flex flex-wrap gap-1 mt-2 sm:mt-3">
           {getTopFaqSuggestions(input).map((q, i) => (
             <button
               key={i}
               onClick={() => sendMessage(q)}
-              className={`text-xs px-3 py-1 rounded-full font-medium transition-colors hover:opacity-80
+              className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full font-medium transition-colors hover:opacity-80
                 ${isDarkMode ? "bg-gray-700/60 text-white" : "bg-gray-200/80 text-black"}`}
             >
               {q}
@@ -319,15 +319,16 @@ return (
     {/* Floating Bot Button */}
     <button
       onClick={() => setOpen(!open)}
-      className={`fixed bottom-6 right-6 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300
         ${isDarkMode ? "bg-[#ffffff33] border border-gray-500" : "bg-[#dbeafecc] border border-gray-300"}`}
     >
-      <span className={`text-2xl ${isDarkMode ? "text-teal-400" : "text-blue-600"} animate-pulse`}>
+      <span className={`text-xl sm:text-2xl ${isDarkMode ? "text-teal-400" : "text-blue-600"} animate-pulse`}>
         <FaRobot />
       </span>
     </button>
   </>
 );
+
 
 
 }
