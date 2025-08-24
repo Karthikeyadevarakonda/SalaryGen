@@ -182,7 +182,7 @@ const payload = {
     <AuditLogsShimmer />
   ) : (
     <table
-      className={`w-full text-sm text-left ${
+      className={`w-full h-full sm:h-auto text-sm text-left ${
         isDarkMode ? "text-slate-200" : "text-slate-800"
       }`}
     >

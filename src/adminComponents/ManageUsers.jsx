@@ -33,7 +33,7 @@ const StaffTable = ({ staffList, loading, onView, onEdit, onDelete, onComponents
 
   return (
     <div
-      className={`overflow-x-auto overflow-y-auto h-92 rounded shadow border ${colors.border} ${colors.card} backdrop-blur-lg`}
+      className={`overflow-x-auto sm:overflow-y-auto h-full sm:h-92 rounded shadow border ${colors.border} ${colors.card} backdrop-blur-lg`}
     >
       <table className="w-full text-sm text-left">
         <thead className={`${colors.textSecondary} uppercase ${colors.secondary}`}>
