@@ -176,7 +176,7 @@ const payload = {
       </div>
 
   
-     <div className={`overflow-x-auto overflow-y-auto h-86 ${ui.cardWrap}`}>
+     <div className={`overflow-x-auto sm:overflow-y-auto h-full sm:h-86 ${ui.cardWrap}`}>
   {loading ? (
     
     <AuditLogsShimmer />
@@ -199,7 +199,7 @@ const payload = {
           ].map((col) => (
             <th
               key={col}
-              className={`px-6 py-3 whitespace-nowrap ${
+              className={`px-6 py-3 whitespace-nowrap text-nowrap ${
                 isDarkMode ? "text-teal-400" : "text-blue-400"
               }`}
             >

@@ -39,7 +39,7 @@ const StaffTable = ({ staffList, loading, onView, onEdit, onDelete, onComponents
         <thead className={`${colors.textSecondary} uppercase ${colors.secondary}`}>
           <tr>
             {["ID", "Name", "Department", "Joining Date", "Actions", "Components"].map((col) => (
-              <th key={col} className={`px-6 py-3 ${isDarkMode ? "bg-slate-900" : "bg-slate-100"}`}>
+              <th key={col} className={`px-6 py-3 ${isDarkMode ? "bg-slate-900" : "bg-slate-100"} text-nowrap whitespace-nowrap`}>
                 {col}
               </th>
             ))}
