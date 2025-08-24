@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* *{
+    outline: 1px solid red;
+} */
+
+html, body {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 4px;  
+  width: 4px;   
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track, #1e293b); 
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, #14b8a6); 
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover, #79838258); 
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb, #79838238) var(--scrollbar-track, #1e293b);
+}
+
+/* Light mode scrollbar variables */
+:root:not(.dark) {
+  --scrollbar-track: #ffffff04;
+  --scrollbar-thumb: #ffffff14;
+  --scrollbar-thumb-hover: #ffffff13;
+}
+
+/* Dark mode scrollbar variables */
+:root.dark {
+  --scrollbar-track: #ffffff00;
+  --scrollbar-thumb: #ffffff09;
+  --scrollbar-thumb-hover: #ffffff58;
+}
+
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: var(--date-picker-filter, invert(1) sepia(1) saturate(5) hue-rotate(180deg));
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  filter: var(--date-picker-filter-hover, invert(1) sepia(1) saturate(5) hue-rotate(140deg));
+}
+
+/* Force recolor for Chrome/Edge/Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: var(--date-picker-filter-force, invert(1) brightness(2)); /* turns icon white */
+  cursor: pointer;
+}
+
+/* Light mode date picker */
+:root:not(.dark) {
+  --date-picker-filter: invert(0) sepia(1) saturate(5) hue-rotate(0deg);
+  --date-picker-filter-hover: invert(0) sepia(1) saturate(5) hue-rotate(20deg);
+  --date-picker-filter-force: invert(0) brightness(1);
+}
+
+/* Dark mode date picker */
+:root.dark {
+  --date-picker-filter: invert(1) sepia(1) saturate(5) hue-rotate(180deg);
+  --date-picker-filter-hover: invert(1) sepia(1) saturate(5) hue-rotate(140deg);
+  --date-picker-filter-force: invert(1) brightness(2);
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 20s linear infinite; /* 20s = very slow */
+  transform-origin: center;
+}
+
+
