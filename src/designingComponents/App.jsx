@@ -6,10 +6,11 @@ import { FaArtstation } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 import ChatBot from '../contexts/ChatBot';
+import { useAuth } from '../contexts/AuthContext';
 
 const App= () => {
   const [isOpen, setIsOpen] = useState(false);
-  const token = localStorage.getItem("token");
+  const {token} = useAuth();
   const { colors } = useTheme();
 
   const points = [

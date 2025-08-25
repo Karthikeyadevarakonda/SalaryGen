@@ -16,6 +16,7 @@ import { FaMoneyBillWave, FaPlusCircle, FaWallet, FaCoins } from "react-icons/fa
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 
+
 const COLORS = ["#14B8A6", "#0e7490", "#94a3b8", "#f59e0b"];
 const CARD_COLORS = ["#14B8A6", "#0e7490", "#94a3b8", "#f59e0b"];
 

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import useApi from "../customHooks/useApi";
 import Loading from "../designingComponents/Loading";
+import CustomDropdown from "../designingComponents/CustomDropdown";
+
 import {
   PencilIcon,
   PlusIcon,
@@ -28,18 +30,39 @@ const SALARY_COMPONENTS = [
 const formatValue = (value) =>
   value === null || value === undefined || value === "" ? "NA" : value;
 
-const StaffTable = ({ staffList, loading, onView, onEdit, onDelete, onComponents }) => {
-  const { colors ,isDarkMode } = useTheme();
+const StaffTable = ({
+  staffList,
+  loading,
+  onView,
+  onEdit,
+  onDelete,
+  onComponents,
+}) => {
+  const { colors, isDarkMode } = useTheme();
 
   return (
     <div
       className={`overflow-x-auto sm:overflow-y-auto h-full sm:h-92 rounded shadow border ${colors.border} ${colors.card} backdrop-blur-lg`}
     >
       <table className="w-full text-sm text-left">
-        <thead className={`${colors.textSecondary} uppercase ${colors.secondary}`}>
+        <thead
+          className={`${colors.textSecondary} uppercase ${colors.secondary}`}
+        >
           <tr>
-            {["ID", "Name", "Department", "Joining Date", "Actions", "Components"].map((col) => (
-              <th key={col} className={`px-6 py-3 ${isDarkMode ? "bg-slate-900" : "bg-slate-100"} text-nowrap whitespace-nowrap`}>
+            {[
+              "ID",
+              "Name",
+              "Department",
+              "Joining Date",
+              "Actions",
+              "Components",
+            ].map((col) => (
+              <th
+                key={col}
+                className={`px-6 py-3 ${
+                  isDarkMode ? "bg-slate-900" : "bg-slate-100"
+                } text-nowrap whitespace-nowrap`}
+              >
                 {col}
               </th>
             ))}
@@ -91,7 +114,6 @@ const StaffTable = ({ staffList, loading, onView, onEdit, onDelete, onComponents
   );
 };
 
-
 const StaffFormPanel = ({
   isOpen,
   isEditMode,
@@ -135,7 +157,6 @@ const StaffFormPanel = ({
         </h2>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-
           {/* Extra fields only for Add Staff */}
           {!isEditMode && (
             <>
@@ -144,7 +165,9 @@ const StaffFormPanel = ({
                   type="text"
                   name="userName"
                   value={formData.userName}
-                  onChange={(e) => setFormData({ ...formData, userName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, userName: e.target.value })
+                  }
                   placeholder="Unique Username"
                   required
                   className={`w-full p-3 rounded-lg border focus:outline-none ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
@@ -157,7 +180,9 @@ const StaffFormPanel = ({
                 type="email"
                 name="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 placeholder="Email"
                 required
                 className={`w-full p-3 rounded-lg border focus:outline-none ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
@@ -166,22 +191,20 @@ const StaffFormPanel = ({
                 type="password"
                 name="password"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 placeholder="Password"
                 required
                 className={`w-full p-3 rounded-lg border focus:outline-none ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
               />
-              <select
-                name="role"
+              <CustomDropdown
+                label="Role"
                 value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                required
-                className={`w-full p-3 rounded-lg border focus:outline-none ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
-              >
-                <option value="ADMIN">Admin</option>
-                <option value="HR">HR</option>
-                <option value="STAFF">Staff</option>
-              </select>
+                onChange={(val) => setFormData({ ...formData, role: val })}
+                options={["ADMIN", "HR", "STAFF"]}
+                placeholder="Select a role"
+              />
             </>
           )}
 
@@ -345,10 +368,8 @@ const StaffViewModal = ({ staff, onClose }) => {
   );
 };
 
-
 export default function ManageUsers() {
-
-  const { colors,isDarkMode } = useTheme();
+  const { colors, isDarkMode } = useTheme();
 
   const { get, post, put, del, loading } = useApi(
     "http://localhost:8081/api/admin/staff"
@@ -362,7 +383,7 @@ export default function ManageUsers() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
   const [selectedStaff, setSelectedStaff] = useState(null);
-  const [showComponentsFor, setShowComponentsFor] = useState(null); 
+  const [showComponentsFor, setShowComponentsFor] = useState(null);
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -485,11 +506,11 @@ export default function ManageUsers() {
       if (isEditMode && editId) {
         await put(`/${editId}`, payload);
       } else {
-        await post("",  {
+        await post("", {
           userName: formData.userName,
           email: formData.email,
           password: formData.password,
-          role:formData.role,
+          role: formData.role,
           ...payload,
         });
       }
@@ -527,21 +548,22 @@ export default function ManageUsers() {
           >
             ← Back to Staff List
           </button>
-          
-           <SalaryComponentCrud baseUrl={`http://localhost:8081/api/hr/salary-components/staff/${showComponentsFor.id}`}
-             staffName={showComponentsFor.name}/>
-             
+
+          <SalaryComponentCrud
+            baseUrl={`http://localhost:8081/api/hr/salary-components/staff/${showComponentsFor.id}`}
+            staffName={showComponentsFor.name}
+          />
         </>
       ) : (
         <>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-<input
-  type="text"
-  placeholder="Search by ID, Name or Department"
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  className={`px-4 py-2 rounded-lg w-full md:w-80 focus:outline-none border ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
-/>
+            <input
+              type="text"
+              placeholder="Search by ID, Name or Department"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`px-4 py-2 rounded-lg w-full md:w-2/3 focus:outline-none border ${colors.input} ${colors.text} ${colors.border} focus:${colors.accent}`}
+            />
             <button
               onClick={handleAddClick}
               className={`flex w-full sm:w-auto items-center gap-2 px-4 py-2 rounded font-semibold ${colors.button} text-white`}

@@ -105,6 +105,8 @@ export default function Reports() {
   const [sortField, setSortField] = useState("id");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [startMonth, setStartMonth] = useState("");
+  const [endMonth, setEndMonth] = useState("");
 
  useEffect(() => {
     axios
@@ -151,6 +153,17 @@ export default function Reports() {
         }
          url = `${API_BASE}/hr/salary-transactions/staff/${selectedStaff}/month?month=${selectedMonth}`;
         break;
+
+  case "All Staff - Month Range":
+  if (!startMonth || !endMonth) {
+    alert("Please choose start and end month.");
+    return;
+  }
+  url = `${API_BASE}/hr/salary-transactions/range?start=${startMonth}&end=${endMonth}`;
+  break;
+
+
+
       case "Specific Staff - Latest Month":
         if (!selectedStaff) {
           alert("Please choose a staff.");
@@ -643,29 +656,31 @@ const exportAllToExcel = () => {
       >
         Generate Salary Reports
       </h2>
+    
+    <CustomDropdown
+  label="Report Type"
+  value={reportType}
+  onChange={(v) => {
+    setReportType(v);
+    setSelectedStaff("");
+    setSelectedMonth("");
+    setStartMonth("");
+    setEndMonth("");
+  }}
+  options={[
+    "All Staff - All Months",
+    "All Staff - Specific Month",
+    "All Staff - Latest Month",
+    "All Staff - Month Range",
+    "Specific Staff - All Months",
+    "Specific Staff - Specific Month",
+    "Specific Staff - Latest Month",
+  ]}
+  placeholder="Select Report Type"
+  isDarkMode={isDarkMode}
+/>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <CustomDropdown
-          label="Report Type"
-          value={reportType}
-          onChange={(v) => {
-            setReportType(v);
-            setSelectedStaff("");
-            setSelectedMonth("");
-          }}
-          options={[
-            "All Staff - All Months",
-            "All Staff - Specific Month",
-            "All Staff - Latest Month",
-            "Specific Staff - All Months",
-            "Specific Staff - Specific Month",
-            "Specific Staff - Latest Month",
-          ]}
-          placeholder="Select Report Type"
-          isDarkMode={isDarkMode}
-        />
-
-        {reportType.includes("Specific Month") && (
+{reportType.includes("Specific Month") && (
           <div>
             <label
               className={`block text-xs sm:text-sm mb-1 ${
@@ -709,7 +724,50 @@ const exportAllToExcel = () => {
             />
           </div>
         )}
-      </div>
+
+{reportType === "All Staff - Month Range" && (
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+    <div>
+      <label
+        className={`block text-xs sm:text-sm mb-1 ${
+          isDarkMode ? "text-slate-300" : "text-blue-400"
+        }`}
+      >
+        Start Month
+      </label>
+      <input
+        type="month"
+        value={startMonth}
+        onChange={(e) => setStartMonth(e.target.value)}
+        className={`w-full rounded-lg border p-2 focus:outline-none focus:border-teal-500 ${
+          isDarkMode
+            ? "border-slate-600 bg-slate-900 text-slate-200"
+            : "border-blue-400 bg-white text-blue-400"
+        }`}
+      />
+    </div>
+
+    <div>
+      <label
+        className={`block text-xs sm:text-sm mb-1 ${
+          isDarkMode ? "text-slate-300" : "text-blue-400"
+        }`}
+      >
+        End Month
+      </label>
+      <input
+        type="month"
+        value={endMonth}
+        onChange={(e) => setEndMonth(e.target.value)}
+        className={`w-full rounded-lg border p-2 focus:outline-none focus:border-teal-500 ${
+          isDarkMode
+            ? "border-slate-600 bg-slate-900 text-slate-200"
+            : "border-blue-400 bg-white text-blue-400"
+        }`}
+      />
+    </div>
+  </div>
+)}
 
       {/* Buttons + Status */}
       <div className="flex flex-wrap gap-3 mt-5 items-center">
@@ -844,7 +902,6 @@ const exportAllToExcel = () => {
         </table>
       </div>
 
-      {/* Mobile Card View */}
      {/* Mobile Card View */}
 <div className="block sm:hidden space-y-4">
   {paginated.length > 0 ? (
@@ -857,7 +914,7 @@ const exportAllToExcel = () => {
             : "bg-white border-gray-200"
         }`}
       >
-        {/* Header: Staff Name */}
+       
         <div className="flex justify-between items-center mb-2">
           <h3
             className={`font-semibold text-base ${
@@ -949,44 +1006,65 @@ const exportAllToExcel = () => {
 </div>
 
 
-      {/* Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-2">
-        <div className="text-xs sm:text-sm text-blue-400">
-          Page {currentPage} of {totalPages}
-        </div>
-        <div className="flex flex-wrap gap-2 justify-center">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage <= 1}
-            className="px-2 py-1 text-xs sm:text-sm rounded bg-blue-100 text-blue-400 disabled:opacity-50"
-          >
-            Prev
-          </button>
-          {[...Array(totalPages)].slice(0, 5).map((_, i) => {
-            const page = i + 1;
-            return (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`px-2 py-1 text-xs sm:text-sm rounded ${
-                  page === currentPage
-                    ? "bg-blue-400 text-white"
-                    : "bg-blue-100 text-blue-400"
-                }`}
-              >
-                {page}
-              </button>
-            );
-          })}
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage >= totalPages}
-            className="px-2 py-1 text-xs sm:text-sm rounded bg-blue-100 text-blue-400 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+    {/* Pagination */}
+<div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-2">
+  <div
+    className={`text-xs sm:text-sm ${
+      isDarkMode ? "text-teal-400" : "text-blue-600"
+    }`}
+  >
+    Page {currentPage} of {totalPages}
+  </div>
+
+  <div className="flex flex-wrap gap-2 justify-center">
+    {/* Prev Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+      disabled={currentPage <= 1}
+      className={`px-2 py-1 text-xs sm:text-sm rounded disabled:opacity-50 transition-colors
+        ${isDarkMode ? "bg-gray-700 text-gray-200" : "bg-gray-200 text-gray-700"}
+      `}
+    >
+      Prev
+    </button>
+
+    {/* Page Numbers */}
+    {[...Array(totalPages)].slice(0, 5).map((_, i) => {
+      const page = i + 1;
+      return (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`px-2 py-1 text-xs sm:text-sm rounded transition-colors
+            ${
+              page === currentPage
+                ? isDarkMode
+                  ? "bg-teal-500 text-white"
+                  : "bg-blue-400 text-black"
+                : isDarkMode
+                ? "bg-gray-700 text-gray-300"
+                : "bg-gray-200 text-gray-700"
+            }
+          `}
+        >
+          {page}
+        </button>
+      );
+    })}
+
+    {/* Next Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+      disabled={currentPage >= totalPages}
+      className={`px-2 py-1 text-xs sm:text-sm rounded disabled:opacity-50 transition-colors
+        ${isDarkMode ? "bg-gray-700 text-gray-200" : "bg-gray-200 text-gray-700"}
+      `}
+    >
+      Next
+    </button>
+  </div>
+</div>
+
     </div>
   </div>
 );

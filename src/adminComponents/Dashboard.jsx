@@ -18,9 +18,6 @@ import DashboardShimmer from "../shimmers/DashboardShimmer";
 
 
 const CARD_COLORS = ["#14b8a6", "#0e7490", "#94a3b8", "#14b8a6"];
-                
-
-    
 
 const Dashboard = () => {
   const { data, get } = useApi("http://localhost:8081/api/hr/staff");
@@ -209,7 +206,7 @@ const pieData = [
   </Pie>
 
   <Tooltip
-    formatter={(value, name) => [name]} // 👈 Tooltip shows only names
+    formatter={(value, name) => [name]}
     contentStyle={{
       backgroundColor: isDarkMode ? "#1e293b" : "#f1f5f9",
       border: "none",
@@ -225,7 +222,7 @@ const pieData = [
   </ResponsiveContainer>
 </div>
 
-{/* Bar chart */}
+
 <div
   className={`p-3.5 rounded-lg transition-transform duration-300 ${
     isDarkMode

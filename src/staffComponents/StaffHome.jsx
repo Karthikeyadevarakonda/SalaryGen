@@ -179,8 +179,8 @@ const StaffHome = () => {
       labelLine={true}
       label={({ cx, cy, midAngle, outerRadius, percent, name }) => {
         const RADIAN = Math.PI / 180;
-        // place labels just outside the slice
-        const r = outerRadius + 15; // push a bit outside
+       
+        const r = outerRadius + 15; 
         const x = cx + r * Math.cos(-midAngle * RADIAN);
         const y = cy + r * Math.sin(-midAngle * RADIAN);
 

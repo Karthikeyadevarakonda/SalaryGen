@@ -190,17 +190,18 @@ return (
     )}
 
     {open && (
-      <div
-        className={`fixed flex flex-col shadow-2xl z-[1000] transition-all duration-300 
-        sm:bottom-20 sm:right-6 sm:w-80 sm:h-[480px] sm:rounded-2xl sm:p-4
-        inset-0 w-full h-full p-3 rounded-none
-        ${isDarkMode 
-          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 border border-gray-700/40" 
-          : "bg-gradient-to-br from-white via-blue-50 to-white text-gray-800 border border-gray-200/40"
-        }`}
-      >
+     <div
+  className={`fixed flex flex-col shadow-2xl z-[1000] transition-all duration-300 
+    inset-0 w-full h-full p-3 rounded-none
+    sm:inset-auto sm:bottom-20 sm:right-6 sm:w-80 sm:h-[480px] sm:rounded-2xl sm:p-4
+    ${isDarkMode 
+      ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 border border-gray-700/40" 
+      : "bg-gradient-to-br from-white via-blue-50 to-white text-gray-800 border border-gray-200/40"
+    }`}
+>
+
         {/* Header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 ">
           <h3 className="font-semibold flex items-center gap-2 text-sm sm:text-base">
             🤖 Salary Bot
           </h3>
@@ -302,7 +303,7 @@ return (
           </button>
         </div>
 
-        {/* FAQ Suggestions */}
+       
         <div className="flex flex-wrap gap-2 mt-3">
           {getTopFaqSuggestions(input).map((q, i) => (
             <button
@@ -318,7 +319,7 @@ return (
       </div>
     )}
 
-    {/* Floating Bot Button */}
+   
     <button
       onClick={() => setOpen(!open)}
       className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300

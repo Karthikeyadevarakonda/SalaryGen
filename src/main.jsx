@@ -38,17 +38,13 @@ createRoot(document.getElementById('root')).render(
              <Route path='/login' element={<Login/>}/>
              <Route path='/register' element={<Register/>}/>
          </Route>
-       
-        <Route path='/adminDashboard/*' element={<AdminDashboard/>}/>
-        <Route path='/hrDashboard/*' element={<HrDashboard/>}/>
-        <Route path='/staffDashboard/*' element={<StaffDashboard/>}/>
      
 
        <Route element={<IsAuthenticated/>}>
 
-        {/* <Route path='/adminDashboard/*' element={<ProtectedRoutes><AdminDashboard/></ProtectedRoutes>}/>
+        <Route path='/adminDashboard/*' element={<ProtectedRoutes><AdminDashboard/></ProtectedRoutes>}/>
         <Route path='/hrDashboard/*' element={<HrProtectedRoute><HrDashboard/></HrProtectedRoute>}/>
-        <Route path='/staffDashboard/*' element={<StaffProtectedRoute><StaffDashboard/></StaffProtectedRoute>}/> */}
+        <Route path='/staffDashboard/*' element={<StaffProtectedRoute><StaffDashboard/></StaffProtectedRoute>}/>
         
        </Route>
 
