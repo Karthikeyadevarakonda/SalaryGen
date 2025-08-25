@@ -12,7 +12,7 @@ export default function GenerateSalaries() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { data: results, loading, error, post } = useApi(
-    "http://localhost:8081/api/hr/salary-transactions"
+    "https://salarygenbackend-3.onrender.com/api/hr/salary-transactions"
   );
 
   const handleSubmit = async (e) => {

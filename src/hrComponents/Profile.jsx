@@ -58,7 +58,7 @@ const Profile = () => {
   const {id} = useAuth();
       const staffId = id;
   const { data: staffData, get: getStaff } = useApi(
-    `http://localhost:8081/api/hr/salary-transactions/staff/${staffId}/all`
+    `https://salarygenbackend-3.onrender.com/api/hr/salary-transactions/staff/${staffId}/all`
   );
 
   const [stats, setStats] = useState({

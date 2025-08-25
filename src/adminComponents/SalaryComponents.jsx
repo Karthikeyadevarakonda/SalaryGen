@@ -3,7 +3,7 @@ import SalaryComponentCrud from '../designingComponents/SalaryComponentsCrud'
 const SalaryComponents = () => {
   return (
     <div>
-      <SalaryComponentCrud baseUrl="http://localhost:8081/api/hr/salary-components" />
+      <SalaryComponentCrud baseUrl="https://salarygenbackend-3.onrender.com/api/hr/salary-components" />
     </div>
   )
 }

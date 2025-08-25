@@ -13,7 +13,7 @@ const Register = () => {
   const [formError, setFormError] = useState(null);
 
   // ✅ initialize useApi with base URL
-  const { error, loading, post } = useApi("http://localhost:8080/register");
+  const { error, loading, post } = useApi("https://salarygenbackend-3.onrender.com/register");
 
   async function handleRegister(e) {
     e.preventDefault();

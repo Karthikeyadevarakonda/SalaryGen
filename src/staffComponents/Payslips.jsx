@@ -31,7 +31,7 @@ export default function Payslips() {
 
   const {id} = useAuth();
   const staffId = id;
-  const backendUrl = "http://localhost:8081";
+  const backendUrl = "https://salarygenbackend-3.onrender.com";
   const { get } = useApi(backendUrl);
 
   const [mode, setMode] = useState("latest");
@@ -101,7 +101,7 @@ export default function Payslips() {
   }
 
   try {
-    const url = `http://localhost:8081/api/staff/${report.staffId}`;
+    const url = `https://salarygenbackend-3.onrender.com/api/staff/${report.staffId}`;
     const res = await fetch(url,{
       headers:{
         Authorization:`Bearer ${token}`

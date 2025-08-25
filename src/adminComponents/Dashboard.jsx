@@ -20,7 +20,7 @@ import DashboardShimmer from "../shimmers/DashboardShimmer";
 const CARD_COLORS = ["#14b8a6", "#0e7490", "#94a3b8", "#14b8a6"];
 
 const Dashboard = () => {
-  const { data, get } = useApi("http://localhost:8081/api/hr/staff");
+  const { data, get } = useApi("http://salarygenbackend-3.onrender.com/api/hr/staff");
   const { colors, isDarkMode } = useTheme();
   const COLORS = isDarkMode
   ? ["#14B8A6", "#94a3b8", "#cbd5e1", "#0e7490"] 

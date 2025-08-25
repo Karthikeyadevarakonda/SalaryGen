@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState(null);
 
-  const { data, error, loading, post } = useApi("http://localhost:8081/api/auth/login");
+  const { data, error, loading, post } = useApi("https://salarygenbackend-3.onrender.com/api/auth/login");
 
   async function handleLogin(e) {
     e.preventDefault();

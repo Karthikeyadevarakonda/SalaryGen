@@ -9,7 +9,7 @@ import * as XLSX2 from "xlsx-js-style";
 import { useTheme } from "../contexts/ThemeContext"; 
 import { useAuth } from "../contexts/AuthContext";
 
-const API_BASE = "http://localhost:8081/api";
+const API_BASE = "https://salarygenbackend-3.onrender.com/api";
 const rowsPerPage = 10;
 
 const toBase64 = (url) =>
@@ -201,7 +201,7 @@ export default function Reports() {
 
  
   const downloadPayslip = async (report) => {
-  let url = `http://localhost:8081/api/hr/staff/${report.staffId}`;
+  let url = `https://salarygenbackend-3.onrender.com/api/hr/staff/${report.staffId}`;
 
   const res = await fetch(url,{
         headers:{

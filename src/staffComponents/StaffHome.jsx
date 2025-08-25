@@ -31,7 +31,7 @@ const StaffHome = () => {
   const {id} = useAuth();
     const staffId = id;
   const { data: staffData, get: getStaff } = useApi(
-    `http://localhost:8081/api/staff/salary-transactions/${staffId}/all`
+    `https://salarygenbackend-3.onrender.com/api/staff/salary-transactions/${staffId}/all`
   );
 
   const [stats, setStats] = useState({

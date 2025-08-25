@@ -372,7 +372,7 @@ export default function ManageUsers() {
   const { colors, isDarkMode } = useTheme();
 
   const { get, post, put, del, loading } = useApi(
-    "http://localhost:8081/api/admin/staff"
+    "https://salarygenbackend-3.onrender.com/api/admin/staff"
   );
   const [staffList, setStaffList] = useState([]);
   const [filteredStaffList, setFilteredStaffList] = useState([]);
@@ -550,7 +550,7 @@ export default function ManageUsers() {
           </button>
 
           <SalaryComponentCrud
-            baseUrl={`http://localhost:8081/api/hr/salary-components/staff/${showComponentsFor.id}`}
+            baseUrl={`https://salarygenbackend-3.onrender.com/api/hr/salary-components/staff/${showComponentsFor.id}`}
             staffName={showComponentsFor.name}
           />
         </>
