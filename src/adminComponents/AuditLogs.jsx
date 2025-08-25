@@ -7,7 +7,7 @@ export default function AuditLogs() {
   const theme  = useTheme();
   const isDarkMode = theme.isDarkMode;
 
-const { get, loading } = useApi("https://localhost:8081/api/admin/audit-logs");
+const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/admin/audit-logs");
 
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
