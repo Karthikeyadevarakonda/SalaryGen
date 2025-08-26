@@ -392,7 +392,7 @@ function toWords(num) {
     return (inWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 ? " " + inWords(n % 10000000) : "")).trim();
   }
 
-  // Split integer and decimal part
+
   const [integerPart, fractionPart] = num.toFixed(2).split(".");
   let words = inWords(parseInt(integerPart)) + " Rupees";
 
@@ -403,7 +403,7 @@ function toWords(num) {
   return words + " Only /-";
 }
 
-// Usage in PDF
+
 const wordsY = (doc.lastAutoTable?.finalY ?? 50) + 20;
 doc.setFontSize(11);
 doc.text(
@@ -606,7 +606,7 @@ const exportAllToExcel = () => {
 
   return (
   <div className="p-4 sm:p-6 grid gap-6">
-    {/* Report Generator Card */}
+
     <div
       className={`p-4 sm:p-6 rounded-xl shadow-xl ${
         isDarkMode ? "bg-slate-900 border border-slate-700" : "bg-slate-100"
@@ -734,7 +734,7 @@ const exportAllToExcel = () => {
   </div>
 )}
 
-      {/* Buttons + Status */}
+    
       <div className="flex flex-wrap gap-3 mt-5 items-center">
         <button
           onClick={fetchReports}
@@ -768,13 +768,13 @@ const exportAllToExcel = () => {
       </div>
     </div>
 
-    {/* Table / Mobile Card */}
+  
     <div
       className={`p-4 sm:p-6 rounded-xl shadow-xl ${
         isDarkMode ? "bg-slate-900 border border-slate-700" : "bg-slate-100"
       }`}
     >
-      {/* Search */}
+      
       <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
         <input
           type="text"
@@ -798,7 +798,7 @@ const exportAllToExcel = () => {
         </div>
       </div>
 
-      {/* Desktop Table */}
+      
       <div className="hidden sm:block overflow-x-auto">
         <table
           className={`w-full table-auto text-center transition ${
@@ -867,7 +867,7 @@ const exportAllToExcel = () => {
         </table>
       </div>
 
-     {/* Mobile Card View */}
+     
 <div className="block sm:hidden space-y-4">
   {paginated.length > 0 ? (
     paginated.map((r) => (
@@ -909,7 +909,7 @@ const exportAllToExcel = () => {
           </span>
         </div>
 
-        {/* Details Grid */}
+        
         <div className="grid grid-cols-2 gap-y-2 text-xs text-slate-500">
           <span>ID</span>
           <span className={isDarkMode ? "text-slate-200" : "text-gray-800"}>
@@ -940,7 +940,7 @@ const exportAllToExcel = () => {
           </span>
         </div>
 
-        {/* Action */}
+       
         <div className="flex justify-end mt-3">
           {r.staffId && r.salaryMonth ? (
             <button
@@ -971,7 +971,7 @@ const exportAllToExcel = () => {
 </div>
 
 
-    {/* Pagination */}
+    
 <div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-2">
   <div
     className={`text-xs sm:text-sm ${
@@ -982,7 +982,7 @@ const exportAllToExcel = () => {
   </div>
 
   <div className="flex flex-wrap gap-2 justify-center">
-    {/* Prev Button */}
+   
     <button
       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
       disabled={currentPage <= 1}
@@ -993,7 +993,7 @@ const exportAllToExcel = () => {
       Prev
     </button>
 
-    {/* Page Numbers */}
+    
     {[...Array(totalPages)].slice(0, 5).map((_, i) => {
       const page = i + 1;
       return (
@@ -1017,7 +1017,7 @@ const exportAllToExcel = () => {
       );
     })}
 
-    {/* Next Button */}
+
     <button
       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
       disabled={currentPage >= totalPages}

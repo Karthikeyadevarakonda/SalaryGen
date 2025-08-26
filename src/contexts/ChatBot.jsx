@@ -88,6 +88,8 @@ const FAQ = {
     "salary preview": "Preview salary before generating payslip under Admin Dashboard.",
     "forgot password OTP": "Enter the OTP sent to your registered email.",
     "change language": "Go to Profile → Preferences → Language.",
+    "Boss":"Karthikeya Devarakonda",
+    "Inventor":"Karthikeya Devarakonda , He a Full Stack Dev !",
     "download all reports": "Use Bulk Export under Reports section.",
     "generate bonus pdf": "Bonuses are included in payslip PDF automatically.",
     "view payslip history": "Employees can view past payslips in Payslip History.",
@@ -116,7 +118,8 @@ const FAQ = {
     "thankyou" :"your always welcome..!",
     "hi":"Hello sir how can i help you",
     "hello":"Hello sir how can i help you",
-    "process":"if Your a new user First register with your credentials , and then try login "
+    "process":"if Your a new user First register with your credentials , and then try login ",
+   
 };
 
 

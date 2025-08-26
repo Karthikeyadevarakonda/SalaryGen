@@ -110,7 +110,6 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
   GENERATE LOGS
 </h2>
 
-      {/* Form */}
       <form
         onSubmit={handleFilter}
         className={`flex flex-wrap gap-4 p-4 rounded-lg border shadow-lg transition-all
@@ -120,7 +119,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
               : "bg-white border-slate-300"
           }`}
       >
-        {/* Month */}
+      
         <div className="flex flex-col flex-1 min-w-[100px]">
           <label
             className={`text-sm mb-1 text-center ${
@@ -143,7 +142,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
           />
         </div>
 
-        {/* Year */}
+      
         <div className="flex flex-col flex-1 min-w-[100px]">
           <label
             className={`text-sm mb-1 text-center ${
@@ -166,7 +165,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
           />
         </div>
 
-        {/* Day */}
+   
         <div className="flex flex-col flex-1 min-w-[100px]">
           <label
             className={`text-sm mb-1 text-center ${
@@ -189,8 +188,8 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
           />
         </div>
 
-        {/* Filter Btn */}
-       {/* Filter Btn */}
+      
+    
 <div className="flex flex-col flex-1 min-w-[100px]">
   <label className="text-transparent text-sm mb-1 select-none">
     Filter
@@ -208,7 +207,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
   </button>
 </div>
 
-{/* Clear Btn */}
+
 <div className="flex flex-col flex-1 min-w-[100px]">
   <label className="text-transparent text-sm mb-1 select-none">
     Clear
@@ -239,7 +238,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
   {headingText}
 </h1>
 
-      {/* Table / Shimmer */}
+     
       {loading || showShimmer ? (
         <AuditLogsShimmer />
       ) : filteredLogs.length === 0 ? (
@@ -251,7 +250,7 @@ const { get, loading } = useApi("https://salarygenbackend-3.onrender.com/api/adm
   className={`overflow-x-auto rounded shadow-lg border backdrop-blur-lg transition-all
     ${
       isDarkMode
-        ? "border-slate-700 bg-slate-900"  // wrapper darker than rows
+        ? "border-slate-700 bg-slate-900"  
         : "border-slate-300 bg-slate-50"
     }`}
 >
