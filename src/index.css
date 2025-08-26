@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Dark mode styles */
+
 .dark {
   color-scheme: dark;
 }
@@ -37,14 +37,14 @@ html, body {
   scrollbar-color: var(--scrollbar-thumb, #79838238) var(--scrollbar-track, #1e293b);
 }
 
-/* Light mode scrollbar variables */
+
 :root:not(.dark) {
   --scrollbar-track: #ffffff04;
   --scrollbar-thumb: #ffffff14;
   --scrollbar-thumb-hover: #ffffff13;
 }
 
-/* Dark mode scrollbar variables */
+
 :root.dark {
   --scrollbar-track: #ffffff00;
   --scrollbar-thumb: #ffffff09;
@@ -72,20 +72,20 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   filter: var(--date-picker-filter-hover, invert(1) sepia(1) saturate(5) hue-rotate(140deg));
 }
 
-/* Force recolor for Chrome/Edge/Safari */
+
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: var(--date-picker-filter-force, invert(1) brightness(2)); /* turns icon white */
+  filter: var(--date-picker-filter-force, invert(1) brightness(2)); 
   cursor: pointer;
 }
 
-/* Light mode date picker */
+
 :root:not(.dark) {
   --date-picker-filter: invert(0) sepia(1) saturate(5) hue-rotate(0deg);
   --date-picker-filter-hover: invert(0) sepia(1) saturate(5) hue-rotate(20deg);
   --date-picker-filter-force: invert(0) brightness(1);
 }
 
-/* Dark mode date picker */
+
 :root.dark {
   --date-picker-filter: invert(1) sepia(1) saturate(5) hue-rotate(180deg);
   --date-picker-filter-hover: invert(1) sepia(1) saturate(5) hue-rotate(140deg);
@@ -102,7 +102,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .spin-slow {
-  animation: spin-slow 20s linear infinite; /* 20s = very slow */
+  animation: spin-slow 20s linear infinite;
   transform-origin: center;
 }
 

@@ -11,7 +11,12 @@ export default function GenerateSalaries() {
   const [month, setMonth] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { data: results, loading, error, post } = useApi(
+  const {
+    data: results,
+    loading,
+    error,
+    post,
+  } = useApi(
     "https://salarygenbackend-3.onrender.com/api/hr/salary-transactions"
   );
 
@@ -40,7 +45,6 @@ export default function GenerateSalaries() {
     }
   };
 
-  // Auto-hide error after 3 seconds
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
@@ -53,19 +57,24 @@ export default function GenerateSalaries() {
   const bgForm = isDarkMode ? "bg-slate-900" : "bg-white";
   const textPrimary = isDarkMode ? "text-white" : "text-blue-400";
   const textSecondary = isDarkMode ? "text-teal-400" : "text-blue-400";
-  const borderColor = isDarkMode ? "border border-slate-600" : "border border-blue-300";
-  const inputBg = isDarkMode ? "bg-slate-800 text-white" : "bg-white text-slate-900";
+  const borderColor = isDarkMode
+    ? "border border-slate-600"
+    : "border border-blue-300";
+  const inputBg = isDarkMode
+    ? "bg-slate-800 text-white"
+    : "bg-white text-slate-900";
   const buttonGradient = isDarkMode
     ? "bg-gradient-to-r from-teal-500 to-slate-400 hover:from-teal-400 hover:to-green-300 text-slate-900"
     : "bg-gradient-to-r from-blue-400 to-slate-200 hover:from-blue-300 hover:to-blue-100 text-slate-900";
 
   return (
     <div className={`max-w-6xl h-screen mx-auto p-4 sm:p-6 ${textPrimary}`}>
-      {/* Error Popup (Toast) */}
       {errorMessage && (
         <div
           className={`fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-xl shadow-lg w-[90%] sm:w-auto z-50 text-center font-medium transition-all duration-500
-            ${isDarkMode ? "bg-red-500 text-white" : "bg-red-100 text-red-700"}`}
+            ${
+              isDarkMode ? "bg-red-500 text-white" : "bg-red-100 text-red-700"
+            }`}
         >
           {errorMessage}
         </div>
@@ -164,7 +173,11 @@ export default function GenerateSalaries() {
             <div
               key={item.id}
               className={`p-4 sm:p-6 rounded-2xl border shadow-lg hover:shadow-2xl transition 
-                ${isDarkMode ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200"}`}
+                ${
+                  isDarkMode
+                    ? "bg-slate-800 border-slate-700"
+                    : "bg-white border-slate-200"
+                }`}
             >
               <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
                 <h2
@@ -196,9 +209,7 @@ export default function GenerateSalaries() {
                   <span className={textSecondary}>Total Deductions:</span> ₹
                   {item.totalDeductions.toLocaleString()}
                 </p>
-                <p
-                  className={`text-base sm:text-lg font-bold ${textPrimary}`}
-                >
+                <p className={`text-base sm:text-lg font-bold ${textPrimary}`}>
                   <span
                     className={`text-sm sm:text-lg font-bold ${
                       isDarkMode ? "text-teal-400" : "text-gray-500"

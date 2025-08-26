@@ -135,7 +135,9 @@ const Features = () => {
   return (
     <div
       className={`min-h-screen py-16 px-6 lg:px-20 space-y-20 transition-colors
-        ${isDarkMode ? "bg-slate-900 text-gray-100" : "bg-white text-gray-800"}`}
+        ${
+          isDarkMode ? "bg-slate-900 text-gray-100" : "bg-white text-gray-800"
+        }`}
     >
       <motion.h1
         initial={{ opacity: 0, y: -20 }}

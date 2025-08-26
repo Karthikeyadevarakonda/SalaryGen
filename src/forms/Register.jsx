@@ -12,8 +12,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState(null);
 
-  // ✅ initialize useApi with base URL
-  const { error, loading, post } = useApi("https://salarygenbackend-3.onrender.com/register");
+  const { error, loading, post } = useApi(
+    "https://salarygenbackend-3.onrender.com/register"
+  );
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -24,7 +25,7 @@ const Register = () => {
     }
 
     try {
-      await post("", { username, password }); // ✅ using post method from useApi
+      await post("", { username, password });
       setFormError(null);
       navigate("/login");
     } catch (err) {
@@ -34,14 +35,26 @@ const Register = () => {
   }
 
   return (
-    <div className={`min-h-screen ${colors.primary} flex items-center justify-center px-4 transition-colors duration-300`}>
+    <div
+      className={`min-h-screen ${colors.primary} flex items-center justify-center px-4 transition-colors duration-300`}
+    >
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <div className={`relative w-full max-w-sm ${colors.card} rounded-xl shadow-md p-6 transition-colors duration-300`}>
-        <div className={`absolute top-0 left-0 w-full h-1 rounded-t-xl bg-gradient-to-r ${colors.accent.includes('teal') ? 'from-white via-teal-400 to-white' : 'from-white via-blue-500 to-white'}`} />
+      <div
+        className={`relative w-full max-w-sm ${colors.card} rounded-xl shadow-md p-6 transition-colors duration-300`}
+      >
+        <div
+          className={`absolute top-0 left-0 w-full h-1 rounded-t-xl bg-gradient-to-r ${
+            colors.accent.includes("teal")
+              ? "from-white via-teal-400 to-white"
+              : "from-white via-blue-500 to-white"
+          }`}
+        />
 
-        <h1 className={`text-center text-xl font-bold tracking-wide ${colors.text} mb-4`}>
+        <h1
+          className={`text-center text-xl font-bold tracking-wide ${colors.text} mb-4`}
+        >
           REGISTER
         </h1>
 
@@ -52,7 +65,16 @@ const Register = () => {
             required
             type="text"
             placeholder="Username"
-            className={`w-full px-3 py-2 ${colors.input} ${colors.text} ${colors.border} border rounded-md ${colors.textMuted.replace('text-', 'placeholder-')} focus:outline-none focus:ring-2 ${colors.accent.includes('teal') ? 'focus:ring-teal-400' : 'focus:ring-blue-500'} text-normal transition-colors duration-300`}
+            className={`w-full px-3 py-2 ${colors.input} ${colors.text} ${
+              colors.border
+            } border rounded-md ${colors.textMuted.replace(
+              "text-",
+              "placeholder-"
+            )} focus:outline-none focus:ring-2 ${
+              colors.accent.includes("teal")
+                ? "focus:ring-teal-400"
+                : "focus:ring-blue-500"
+            } text-normal transition-colors duration-300`}
           />
 
           <input
@@ -61,7 +83,16 @@ const Register = () => {
             required
             type="password"
             placeholder="Password"
-            className={`w-full px-3 py-2 ${colors.input} ${colors.text} ${colors.border} border rounded-md ${colors.textMuted.replace('text-', 'placeholder-')} focus:outline-none focus:ring-2 ${colors.accent.includes('teal') ? 'focus:ring-teal-400' : 'focus:ring-blue-500'} text-normal transition-colors duration-300`}
+            className={`w-full px-3 py-2 ${colors.input} ${colors.text} ${
+              colors.border
+            } border rounded-md ${colors.textMuted.replace(
+              "text-",
+              "placeholder-"
+            )} focus:outline-none focus:ring-2 ${
+              colors.accent.includes("teal")
+                ? "focus:ring-teal-400"
+                : "focus:ring-blue-500"
+            } text-normal transition-colors duration-300`}
           />
 
           {(formError || error) && (
@@ -80,7 +111,14 @@ const Register = () => {
 
           <p className={`text-center text-xs ${colors.textMuted}`}>
             Already have an account?{" "}
-            <Link to="/login" className={`${colors.accent.includes('teal') ? 'text-teal-400' : 'text-blue-500'} hover:underline`}>
+            <Link
+              to="/login"
+              className={`${
+                colors.accent.includes("teal")
+                  ? "text-teal-400"
+                  : "text-blue-500"
+              } hover:underline`}
+            >
               Login
             </Link>
           </p>

@@ -12,10 +12,14 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
-import { FaMoneyBillWave, FaPlusCircle, FaWallet, FaCoins } from "react-icons/fa";
+import {
+  FaMoneyBillWave,
+  FaPlusCircle,
+  FaWallet,
+  FaCoins,
+} from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
-
 
 const COLORS = ["#14B8A6", "#0e7490", "#94a3b8", "#f59e0b"];
 const CARD_COLORS = ["#14B8A6", "#0e7490", "#94a3b8", "#f59e0b"];
@@ -32,7 +36,9 @@ function DashboardShimmer() {
   );
 
   const ChartSkeleton = () => (
-    <div className={`${shimmer} bg-slate-300 dark:bg-slate-800 rounded-lg p-4 h-72`}></div>
+    <div
+      className={`${shimmer} bg-slate-300 dark:bg-slate-800 rounded-lg p-4 h-72`}
+    ></div>
   );
 
   return (
@@ -55,8 +61,8 @@ function DashboardShimmer() {
 const Profile = () => {
   const { colors, isDarkMode } = useTheme();
 
-  const {id} = useAuth();
-      const staffId = id;
+  const { id } = useAuth();
+  const staffId = id;
   const { data: staffData, get: getStaff } = useApi(
     `https://salarygenbackend-3.onrender.com/api/hr/salary-transactions/staff/${staffId}/all`
   );
@@ -118,7 +124,9 @@ const Profile = () => {
   );
 
   return (
-    <div className={`space-y-4 ${colors.primary} ${colors.text} px-2 lg:-mb-5 transition-colors duration-300`}>
+    <div
+      className={`space-y-4 ${colors.primary} ${colors.text} px-2 lg:-mb-5 transition-colors duration-300`}
+    >
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         {[
@@ -159,9 +167,7 @@ const Profile = () => {
         ))}
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* Pie Chart */}
         <div className={`${colors.card} p-4 rounded-lg shadow`}>
           <h3
             style={{ color: isDarkMode ? "#0e7490" : "#2563eb" }}
@@ -180,10 +186,15 @@ const Profile = () => {
                 outerRadius={isMobile ? 55 : 75}
                 innerRadius={isMobile ? 30 : 25}
                 labelLine={false}
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
               >
                 {pieData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip
@@ -202,7 +213,6 @@ const Profile = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Bar Chart */}
         <div className={`${colors.card} p-4 rounded-lg shadow`}>
           <h3
             style={{ color: isDarkMode ? "#14b8a6" : "#2563eb" }}
@@ -221,10 +231,17 @@ const Profile = () => {
                 bottom: isMobile ? 10 : 40,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? "#334155" : "#e2e8f0"} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke={isDarkMode ? "#334155" : "#e2e8f0"}
+              />
               {isMobile ? (
                 <>
-                  <XAxis type="number" stroke={isDarkMode ? "#94a3b8" : "#475569"} tick={{ fontSize: 8 }} />
+                  <XAxis
+                    type="number"
+                    stroke={isDarkMode ? "#94a3b8" : "#475569"}
+                    tick={{ fontSize: 8 }}
+                  />
                   <YAxis
                     type="category"
                     dataKey="name"
@@ -262,7 +279,11 @@ const Profile = () => {
                 }}
                 labelStyle={{ color: isDarkMode ? "white" : "black" }}
               />
-              <Bar dataKey="amount" radius={[3, 3, 0, 0]} maxBarSize={isMobile ? 14 : 35}>
+              <Bar
+                dataKey="amount"
+                radius={[3, 3, 0, 0]}
+                maxBarSize={isMobile ? 14 : 35}
+              >
                 {barData.map((entry, index) => (
                   <Cell key={`cell-bar-${index}`} fill={entry.color} />
                 ))}

@@ -10,7 +10,7 @@ export default function useApi(baseUrl) {
   
   const cancelSourceRef = useRef(null);
 
-  // config = { withCredentials: true }
+
   const request = useCallback(
     async (method, endpoint = "", payload = null, config = null) => {
      

@@ -4,13 +4,11 @@ export default function DashboardShimmer() {
   const theme = useTheme();
   const isDarkMode = theme.isDarkMode;
 
-  // Card and shimmer colors
   const cardBg = isDarkMode ? "bg-slate-800" : "bg-white";
 
-  // Shimmer gradient
   const shimmerGradient = isDarkMode
     ? "linear-gradient(90deg, rgba(100,116,139,0.1) 0%, rgba(100,116,139,0.2) 50%, rgba(100,116,139,0.1) 100%)"
-    : "linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(203,213,225,0.6) 50%, rgba(255,255,255,0.6) 100%)"; 
+    : "linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(203,213,225,0.6) 50%, rgba(255,255,255,0.6) 100%)";
 
   const shimmerStyle = {
     background: shimmerGradient,

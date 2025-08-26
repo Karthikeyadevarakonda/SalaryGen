@@ -1,4 +1,4 @@
-// designingComponents/CustomDropdown.jsx
+
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/outline";
@@ -22,7 +22,6 @@ const CustomDropdown = ({ label, value, onChange, options, placeholder }) => {
 
       <Listbox value={value} onChange={onChange}>
         <div className="relative">
-          {/* Button */}
           <Listbox.Button
             className={`relative w-full cursor-pointer rounded-lg border py-2 pl-3 pr-10 text-left focus:outline-none sm:text-sm transition-all
               ${
@@ -43,7 +42,7 @@ const CustomDropdown = ({ label, value, onChange, options, placeholder }) => {
             </span>
           </Listbox.Button>
 
-          {/* Options */}
+       
           <Transition
             as={Fragment}
             leave="transition ease-in duration-100"

@@ -157,7 +157,6 @@ const StaffFormPanel = ({
         </h2>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-          {/* Extra fields only for Add Staff */}
           {!isEditMode && (
             <>
               <div>
@@ -240,7 +239,6 @@ const StaffFormPanel = ({
             );
           })}
 
-          {/* Salary Components */}
           <div className="flex flex-wrap gap-2 mt-2">
             {SALARY_COMPONENTS.map((comp) => {
               const isSelected =
@@ -264,7 +262,6 @@ const StaffFormPanel = ({
             })}
           </div>
 
-          {/* Action buttons */}
           <div className="flex justify-end gap-3 mt-6">
             <button
               type="button"

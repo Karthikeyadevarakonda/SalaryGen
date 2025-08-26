@@ -12,24 +12,27 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
-import { FaMoneyBillWave, FaPlusCircle, FaWallet, FaCoins } from "react-icons/fa";
+import {
+  FaMoneyBillWave,
+  FaPlusCircle,
+  FaWallet,
+  FaCoins,
+} from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import DashboardShimmer from "../shimmers/DashboardShimmer";
 import { useAuth } from "../contexts/AuthContext";
 
 const CARD_COLORS = ["#14B8A6", "#0e7490", "#94a3b8", "#14b8a6"];
 
-
 const StaffHome = () => {
   const { colors, isDarkMode } = useTheme();
 
-  // Blue-400 for pie (and bars) in light mode as requested
   const COLORS = isDarkMode
     ? ["#14B8A6", "#94a3b8", "#cbd5e1", "#0e7490"]
     : ["#60a5fa", "#94a3b8", "#cbd5e1", "#0e7490"];
 
-  const {id} = useAuth();
-    const staffId = id;
+  const { id } = useAuth();
+  const staffId = id;
   const { data: staffData, get: getStaff } = useApi(
     `https://salarygenbackend-3.onrender.com/api/staff/salary-transactions/${staffId}/all`
   );
@@ -96,7 +99,6 @@ const StaffHome = () => {
 
   return (
     <div className={`space-y-6 ${colors.primary} ${colors.text} lg:-mb-5`}>
-      {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-[#729bde]">
         {[
           {
@@ -117,7 +119,12 @@ const StaffHome = () => {
           {
             title: "Net Salary",
             value: `₹${stats.netSalary.toLocaleString()}`,
-            icon: <FaCoins size={24} className="text-slate-400 dark:text-slate-300" />,
+            icon: (
+              <FaCoins
+                size={24}
+                className="text-slate-400 dark:text-slate-300"
+              />
+            ),
           },
         ].map((card, idx) => (
           <div
@@ -137,22 +144,29 @@ const StaffHome = () => {
             }
           >
             <div className="mb-2">{card.icon}</div>
-            <h3 style={{ color: CARD_COLORS[idx] }} className="text-lg font-semibold">
+            <h3
+              style={{ color: CARD_COLORS[idx] }}
+              className="text-lg font-semibold"
+            >
               {card.title}
             </h3>
-            <p className={`text-2xl font-bold mt-2 ${isDarkMode ? "text-white" : "text-gray-500"}`}>
+            <p
+              className={`text-2xl font-bold mt-2 ${
+                isDarkMode ? "text-white" : "text-gray-500"
+              }`}
+            >
               {card.value}
             </p>
           </div>
         ))}
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* Pie chart */}
         <div
           className={`p-3.5 rounded-lg transition-transform duration-300 ${
-            isDarkMode ? colors.card : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
+            isDarkMode
+              ? colors.card
+              : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
           }`}
           style={
             !isDarkMode
@@ -163,74 +177,82 @@ const StaffHome = () => {
               : {}
           }
         >
-          <h3 style={{ color: "#0e7490" }} className="mb-3.5 font-semibold text-sm sm:text-xl">
+          <h3
+            style={{ color: "#0e7490" }}
+            className="mb-3.5 font-semibold text-sm sm:text-xl"
+          >
             Salary Breakdown
           </h3>
-      <ResponsiveContainer width="100%" height={isMobile ? 180 : 200}>
-  <PieChart>
-    <Pie
-      data={pieData}
-      dataKey="value"
-      nameKey="name"
-      cx="50%"
-      cy="50%"
-      outerRadius={isMobile ? 55 : 75}
-      innerRadius={isMobile ? 30 : 40}
-      labelLine={true}
-      label={({ cx, cy, midAngle, outerRadius, percent, name }) => {
-        const RADIAN = Math.PI / 180;
-       
-        const r = outerRadius + 15; 
-        const x = cx + r * Math.cos(-midAngle * RADIAN);
-        const y = cy + r * Math.sin(-midAngle * RADIAN);
+          <ResponsiveContainer width="100%" height={isMobile ? 180 : 200}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={isMobile ? 55 : 75}
+                innerRadius={isMobile ? 30 : 40}
+                labelLine={true}
+                label={({ cx, cy, midAngle, outerRadius, percent, name }) => {
+                  const RADIAN = Math.PI / 180;
 
-        const shortNameMap = {
-          "Gross Salary": "G_SAL",
-          "Allowances": "ALLOW",
-          "Deductions": "DEDUCT",
-          "Net Salary": "N_SAL",
-        };
+                  const r = outerRadius + 15;
+                  const x = cx + r * Math.cos(-midAngle * RADIAN);
+                  const y = cy + r * Math.sin(-midAngle * RADIAN);
 
-        return (
-          <text
-            x={x}
-            y={y}
-            fill={isDarkMode ? "#fff" : "#000"}
-            textAnchor={x > cx ? "start" : "end"}
-            dominantBaseline="central"
-            fontSize={isMobile ? 9 : 16}
-            fontWeight="600"
-          >
-            {`${shortNameMap[name] || name}: ${(percent * 100).toFixed(0)}%`}
-          </text>
-        );
-      }}
-    >
-      {pieData.map((_, index) => (
-        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-      ))}
-    </Pie>
+                  const shortNameMap = {
+                    "Gross Salary": "G_SAL",
+                    Allowances: "ALLOW",
+                    Deductions: "DEDUCT",
+                    "Net Salary": "N_SAL",
+                  };
 
-    <Tooltip
-      contentStyle={{
-        backgroundColor: isDarkMode ? "#1e293b" : "#f1f5f9",
-        border: "none",
-      }}
-      itemStyle={{
-        color: isDarkMode ? "white" : "black",
-        fontSize: isMobile ? 9 : 16,
-      }}
-      labelStyle={{ color: isDarkMode ? "white" : "black" }}
-    />
-  </PieChart>
-</ResponsiveContainer>
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      fill={isDarkMode ? "#fff" : "#000"}
+                      textAnchor={x > cx ? "start" : "end"}
+                      dominantBaseline="central"
+                      fontSize={isMobile ? 9 : 16}
+                      fontWeight="600"
+                    >
+                      {`${shortNameMap[name] || name}: ${(
+                        percent * 100
+                      ).toFixed(0)}%`}
+                    </text>
+                  );
+                }}
+              >
+                {pieData.map((_, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
 
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: isDarkMode ? "#1e293b" : "#f1f5f9",
+                  border: "none",
+                }}
+                itemStyle={{
+                  color: isDarkMode ? "white" : "black",
+                  fontSize: isMobile ? 9 : 16,
+                }}
+                labelStyle={{ color: isDarkMode ? "white" : "black" }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
 
-        {/* Bar chart */}
         <div
           className={`p-3.5 rounded-lg transition-transform duration-300 ${
-            isDarkMode ? colors.card : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
+            isDarkMode
+              ? colors.card
+              : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
           }`}
           style={
             !isDarkMode
@@ -241,7 +263,10 @@ const StaffHome = () => {
               : {}
           }
         >
-          <h3 style={{ color: "#14b8a6" }} className="mb-3.5 font-semibold text-sm sm:text-xl">
+          <h3
+            style={{ color: "#14b8a6" }}
+            className="mb-3.5 font-semibold text-sm sm:text-xl"
+          >
             Salary Components Distribution
           </h3>
           <ResponsiveContainer width="100%" height={isMobile ? 216 : 198}>
@@ -255,7 +280,10 @@ const StaffHome = () => {
                 bottom: isMobile ? 9 : 36,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? "#334155" : "#e2e8f0"} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke={isDarkMode ? "#334155" : "#e2e8f0"}
+              />
               {isMobile ? (
                 <>
                   <XAxis
@@ -302,7 +330,11 @@ const StaffHome = () => {
                 }}
                 labelStyle={{ color: isDarkMode ? "white" : "black" }}
               />
-              <Bar dataKey="amount" radius={[3, 3, 0, 0]} maxBarSize={isMobile ? 12 : 31}>
+              <Bar
+                dataKey="amount"
+                radius={[3, 3, 0, 0]}
+                maxBarSize={isMobile ? 12 : 31}
+              >
                 {barData.map((entry, index) => (
                   <Cell key={`cell-bar-${index}`} fill={entry.color} />
                 ))}
