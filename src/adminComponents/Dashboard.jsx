@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useApi from "../customHooks/useApi";
 import {
   PieChart,
@@ -11,20 +11,27 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Legend,
 } from "recharts";
-import { FaUsers, FaMoneyBillWave, FaWallet, FaCoins } from "react-icons/fa";
+import { 
+  Users, 
+  DollarSign, 
+  Wallet, 
+  TrendingUp,
+  TrendingDown,
+  PieChart as PieChartIcon,
+  BarChart3
+} from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import DashboardShimmer from "../shimmers/DashboardShimmer";
-
-
-const CARD_COLORS = ["#14b8a6", "#0e7490", "#94a3b8", "#14b8a6"];
 
 const Dashboard = () => {
   const { data, get } = useApi("https://salarygenbackend-3.onrender.com/api/hr/staff");
   const { colors, isDarkMode } = useTheme();
-  const COLORS = isDarkMode
-  ? ["#14B8A6", "#94a3b8", "#cbd5e1", "#0e7490"] 
-  : ["#729bde", "#94a3b8", "#cbd5e1", "#0e7490"]; 
+  
+  const CHART_COLORS = isDarkMode
+    ? ["#14B8A6", "#F59E0B", "#EF4444", "#8B5CF6", "#06B6D4"] 
+    : ["#0891B2", "#059669", "#DC2626", "#7C3AED", "#EA580C"];
 
   const [stats, setStats] = useState({
     totalStaff: 0,
@@ -37,9 +44,7 @@ const Dashboard = () => {
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
-  useEffect(() => {
-    get();
-  }, [get]);
+  useEffect(() => { get(); }, [get]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -83,237 +88,264 @@ const Dashboard = () => {
 
   if (loading) return <DashboardShimmer />;
 
-const pieData = [
-  { name: "Salaries", value: stats.totalSalaries },
-  { name: "Deductions", value: stats.totalDeductions },
-];
+  const pieData = [
+    { name: "Total Salaries", value: stats.totalSalaries },
+    { name: "Total Deductions", value: stats.totalDeductions },
+  ];
 
   const barData = Object.entries(stats.componentTotals).map(
     ([key, value], idx) => {
       let shortName = key;
 
       if (key.replace(/[_\s]/g, "").toLowerCase() === "medicalallowance") {
-        shortName = "MEDICAL";
+        shortName = "Medical";
       } else if (key.replace(/[_\s]/g, "").toLowerCase() === "specialallowance") {
-        shortName = "SPECIAL";
-      } else if (key.length > 10) {
-        shortName = key.slice(0, 10) + "…";
+        shortName = "Special";
+      } else if (key.length > 12) {
+        shortName = key.slice(0, 8) + "…";
       }
 
       return {
         name: shortName,
         count: value,
-        color: COLORS[idx % COLORS.length],
+        fullName: key,
       };
     }
   );
 
-  return (
-    <div className={`space-y-6 ${colors.primary} ${colors.text} lg:-mb-5`}>
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-[#729bde]">
-  {[
-    {
-      title: "Total Staff",
-      value: stats.totalStaff,
-      icon: <FaUsers size={24} />,
-    },
-    {
-      title: "Total Salaries",
-      value: `₹${stats.totalSalaries.toLocaleString()}`,
-      icon: <FaMoneyBillWave size={24} />,
-    },
-    {
-      title: "Total Deductions",
-      value: `₹${stats.totalDeductions.toLocaleString()}`,
-      icon: <FaWallet size={24} />,
-    },
-    {
-      title: "Net Gross",
-      value: `₹${stats.netGross.toLocaleString()}`,
-      icon: <FaCoins size={24} className="text-slate-400 dark:text-slate-300" />,
-    },
-  ].map((card, idx) => (
-    <div
-      key={idx}
-      className={`flex flex-col items-center p-4 rounded-lg transition-transform duration-300 text-center ${
-        isDarkMode
-          ? colors.card
-          : "bg-gray-100 shadow-lg transform hover:-translate-y-2"
-      }`}
-      style={
-        !isDarkMode
-          ? {
-              boxShadow:
-                "0.6em 0.6em 1.2em rgba(210, 220, 233, 0.8), -0.5em -0.5em 1em rgba(255, 255, 255, 0.8)",
-            }
-          : {}
-      }
-    >
-      <div className="mb-2">{card.icon}</div>
-      <h3 style={{ color: CARD_COLORS[idx] }} className="text-lg font-semibold">
-        {card.title}
-      </h3>
-      <p className={`text-2xl font-bold mt-2 ${isDarkMode ? "text-white" : "text-gray-500"}`}>
-        {card.value}
-      </p>
+  const StatCard = ({ title, value, icon: Icon, color, trend }) => (
+    <div className={`${colors.card} rounded-xl p-6 shadow-lg border ${colors.border} hover:shadow-xl transition-all duration-300 group`}>
+      <div className="flex items-center justify-between mb-4">
+        <div className={`p-3 rounded-lg bg-gradient-to-br ${color} group-hover:scale-110 transition-transform duration-300`}>
+          <Icon className="w-6 h-6 text-white" />
+        </div>
+        {trend && (
+          <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+            trend > 0 
+              ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+              : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
+          }`}>
+            {trend > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+            {Math.abs(trend)}%
+          </div>
+        )}
+      </div>
+      <div>
+        <h3 className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>
+          {title}
+        </h3>
+        <p className={`text-2xl font-bold ${colors.text} group-hover:scale-105 transition-transform duration-300`}>
+          {typeof value === 'string' ? value : value.toLocaleString()}
+        </p>
+      </div>
     </div>
-  ))}
-</div>
+  );
 
+  return (
+    <div className={`min-h-screen ${colors.primary} p-4 md:p-6 lg:p-8`}>
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className={`text-3xl md:text-4xl font-bold ${colors.text} mb-2`}>
+            HR Dashboard
+          </h1>
+          <p className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            Complete overview of your workforce and payroll
+          </p>
+        </div>
 
-     
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 ">
-        
-<div
-  className={`p-3.5 rounded-lg transition-transform duration-300 ${
-    isDarkMode
-      ? colors.card
-      : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
-  }`}
-  style={
-    !isDarkMode
-      ? {
-          boxShadow:
-            "0.6em 0.6em 1.2em rgba(210, 220, 233, 0.8), -0.5em -0.5em 1em rgba(255, 255, 255, 0.8)",
-        }
-      : {}
-  }
->
-  <h3
-    style={{ color: "#0e7490" }}
-    className="mb-3.5 font-semibold text-sm sm:text-xl"
-  >
-    Salaries vs Deductions
-  </h3>
-  <ResponsiveContainer width="100%" height={isMobile ? 162 : 180}>
-   
-
-
-<PieChart>
-  <Pie
-    data={pieData}
-    dataKey="value"
-    nameKey="name"
-    cx="50%"
-    cy="50%"
-    outerRadius={isMobile ? 50 : 81}
-    label={({ name }) => name} // 👈 Show only names
-  >
-    {pieData.map((_, index) => (
-      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-    ))}
-  </Pie>
-
-  <Tooltip
-    formatter={(value, name) => [name]}
-    contentStyle={{
-      backgroundColor: isDarkMode ? "#1e293b" : "#f1f5f9",
-      border: "none",
-    }}
-    itemStyle={{
-      color: isDarkMode ? "white" : "black",
-      fontSize: isMobile ? 9 : 11,
-    }}
-    labelStyle={{ color: isDarkMode ? "white" : "black" }}
-  />
-</PieChart>
-
-  </ResponsiveContainer>
-</div>
-
-
-<div
-  className={`p-3.5 rounded-lg transition-transform duration-300 ${
-    isDarkMode
-      ? colors.card
-      : "bg-gray-100 shadow-lg transform hover:-translate-y-0"
-  }`}
-  style={
-    !isDarkMode
-      ? {
-          boxShadow:
-            "0.6em 0.6em 1.2em rgba(210, 220, 233, 0.8), -0.5em -0.5em 1em rgba(255, 255, 255, 0.8)",
-        }
-      : {}
-  }
->
-  <h3
-    style={{ color: "#14b8a6" }}
-    className="mb-3.5 font-semibold text-sm sm:text-xl"
-  >
-    Salary Components Distribution
-  </h3>
-  <ResponsiveContainer width="100%" height={isMobile ? 216 : 198}>
-    <BarChart
-      data={barData}
-      layout={isMobile ? "vertical" : "horizontal"}
-      margin={{
-        top: 9,
-        right: isMobile ? 9 : 18,
-        left: isMobile ? 13 : 9,
-        bottom: isMobile ? 9 : 36,
-      }}
-    >
-      <CartesianGrid
-        strokeDasharray="3 3"
-        stroke={isDarkMode ? "#334155" : "#e2e8f0"}
-      />
-      {isMobile ? (
-        <>
-          <XAxis
-            type="number"
-            stroke={isDarkMode ? "#94a3b8" : "#475569"}
-            tick={{ fontSize: 7 }}
-            allowDecimals={false}
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <StatCard
+            title="Total Staff"
+            value={stats.totalStaff}
+            icon={Users}
+            color="from-blue-500 to-blue-600"
+            trend={12}
           />
-          <YAxis
-            type="category"
-            dataKey="name"
-            stroke={isDarkMode ? "#94a3b8" : "#475569"}
-            tick={{ fontSize: 7 }}
-            width={54}
+          <StatCard
+            title="Total Salaries"
+            value={`₹${stats.totalSalaries.toLocaleString()}`}
+            icon={DollarSign}
+            color="from-green-500 to-green-600"
+            trend={8}
           />
-        </>
-      ) : (
-        <>
-          <XAxis
-            dataKey="name"
-            stroke={isDarkMode ? "#94a3b8" : "#475569"}
-            tick={{ fontSize: 11 }}
-            interval={0}
-            angle={-45}
-            textAnchor="end"
-            padding={{ left: 0, right: 5 }}
+          <StatCard
+            title="Total Deductions"
+            value={`₹${stats.totalDeductions.toLocaleString()}`}
+            icon={Wallet}
+            color="from-orange-500 to-orange-600"
+            trend={-3}
           />
-          <YAxis
-            stroke={isDarkMode ? "#94a3b8" : "#475569"}
-            tick={{ fontSize: 11 }}
-            tickMargin={7}
-            allowDecimals={false}
+          <StatCard
+            title="Net Gross"
+            value={`₹${stats.netGross.toLocaleString()}`}
+            icon={TrendingUp}
+            color="from-purple-500 to-purple-600"
+            trend={15}
           />
-        </>
-      )}
-      <Tooltip
-        contentStyle={{
-          backgroundColor: isDarkMode ? "#1e293b" : "#f1f5f9",
-          border: "none",
-        }}
-        itemStyle={{
-          color: isDarkMode ? "white" : "black",
-          fontSize: isMobile ? 9 : 11,
-        }}
-        labelStyle={{ color: isDarkMode ? "white" : "black" }}
-      />
-      <Bar dataKey="count" radius={[3, 3, 0, 0]} maxBarSize={isMobile ? 12 : 31}>
-        {barData.map((entry, index) => (
-          <Cell key={`cell-bar-${index}`} fill={entry.color} />
-        ))}
-      </Bar>
-    </BarChart>
-  </ResponsiveContainer>
-</div>
+        </div>
 
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+          {/* Pie Chart */}
+          <div className={`${colors.card} rounded-xl p-6 shadow-lg border ${colors.border}`}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600">
+                <PieChartIcon className="w-5 h-5 text-white" />
+              </div>
+              <h3 className={`text-xl font-semibold ${colors.text}`}>
+                Salary Distribution
+              </h3>
+            </div>
+            
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius="70%"
+                    innerRadius="30%"
+                    paddingAngle={5}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    labelLine={false}
+                  >
+                    {pieData.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value, name) => [
+                      `₹${value.toLocaleString()}`,
+                      name
+                    ]}
+                    contentStyle={{
+                      backgroundColor: isDarkMode ? "#1e293b" : "#ffffff",
+                      border: "none",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                    }}
+                    itemStyle={{
+                      color: isDarkMode ? "#ffffff" : "#374151",
+                      fontWeight: "500",
+                    }}
+                    labelStyle={{ 
+                      color: isDarkMode ? "#ffffff" : "#111827",
+                      fontWeight: "600",
+                    }}
+                  />
+                  <Legend 
+                    verticalAlign="bottom" 
+                    height={36}
+                    iconType="circle"
+                    wrapperStyle={{
+                      color: isDarkMode ? "#ffffff" : "#374151",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Bar Chart */}
+          <div className={`${colors.card} rounded-xl p-6 shadow-lg border ${colors.border}`}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600">
+                <BarChart3 className="w-5 h-5 text-white" />
+              </div>
+              <h3 className={`text-xl font-semibold ${colors.text}`}>
+                Component Distribution
+              </h3>
+            </div>
+            
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={barData}
+                  layout={isMobile ? "vertical" : "horizontal"}
+                  margin={{
+                    top: 20,
+                    right: 20,
+                    left: 10,
+                    bottom: 5,
+                  }}
+                  barCategoryGap={isMobile ? "20%" : "10%"}
+                >
+                  <CartesianGrid 
+                    strokeDasharray="3 3" 
+                    stroke={isDarkMode ? "#334155" : "#e2e8f0"}
+                    strokeOpacity={0.5}
+                  />
+                  {isMobile ? (
+                    <>
+                      <XAxis type="number" hide />
+                      <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} width={80} />
+                    </>
+                  ) : (
+                    <>
+                      <XAxis
+                        dataKey="name"
+                        stroke={isDarkMode ? "#94a3b8" : "#64748b"}
+                        fontSize={12}
+                        fontWeight="500"
+                        tick={{ fill: isDarkMode ? "#94a3b8" : "#64748b" }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        stroke={isDarkMode ? "#94a3b8" : "#64748b"}
+                        fontSize={12}
+                        fontWeight="500"
+                        tick={{ fill: isDarkMode ? "#94a3b8" : "#64748b" }}
+                        axisLine={false}
+                        tickLine={false}
+                        allowDecimals={false}
+                      />
+                    </>
+                  )}
+                  <Tooltip
+                    formatter={(value, name, props) => [
+                      `${value} employees`,
+                      props.payload.fullName || name
+                    ]}
+                    contentStyle={{
+                      backgroundColor: isDarkMode ? "#1e293b" : "#ffffff",
+                      border: "none",
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                    }}
+                    itemStyle={{
+                      color: isDarkMode ? "#ffffff" : "#374151",
+                      fontWeight: "500",
+                    }}
+                    labelStyle={{ 
+                      color: isDarkMode ? "#ffffff" : "#111827",
+                      fontWeight: "600",
+                    }}
+                  />
+                  <Bar 
+                    dataKey="count" 
+                    radius={[4, 4, 0, 0]}
+                    maxBarSize={isMobile ? 15 : 31}
+                  >
+                    {barData.map((_, index) => (
+                      <Cell 
+                        key={`cell-bar-${index}`} 
+                        fill={CHART_COLORS[index % CHART_COLORS.length]} 
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
