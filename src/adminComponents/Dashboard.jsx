@@ -295,7 +295,7 @@ const Dashboard = () => {
                 >
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke={isDarkMode ? "#334155" : "#e2e8f0"}
+                   stroke={isDarkMode ? "#a9a9a9dc" : "#94a3b8"} 
                     strokeOpacity={0.5}
                   />
                   {isMobile ? (
