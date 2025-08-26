@@ -365,90 +365,52 @@ y = doc.lastAutoTable.finalY + 20;
       },
     });
 
-
-   function toWords(num) {
+function toWords(num) {
+  if (!num && num !== 0) return "-"; // handle undefined/null
   if (num === 0) return "Zero Rupees Only /-";
 
   const a = [
-    "",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Ten",
-    "Eleven",
-    "Twelve",
-    "Thirteen",
-    "Fourteen",
-    "Fifteen",
-    "Sixteen",
-    "Seventeen",
-    "Eighteen",
+    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen",
+    "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
     "Nineteen",
   ];
 
   const b = [
-    "",
-    "",
-    "Twenty",
-    "Thirty",
-    "Forty",
-    "Fifty",
-    "Sixty",
-    "Seventy",
-    "Eighty",
-    "Ninety",
+    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty",
+    "Seventy", "Eighty", "Ninety",
   ];
 
   function inWords(n) {
+    n = Math.floor(n); // ensure integer
     if (n === 0) return "";
     if (n < 20) return a[n];
-    if (n < 100)
-      return (
-        b[Math.floor(n / 10)] +
-        (n % 10 ? " " + a[n % 10] : "")
-      ).trim();
-    if (n < 1000)
-      return (
-        a[Math.floor(n / 100)] +
-        " Hundred" +
-        (n % 100 ? " " + inWords(n % 100) : "")
-      ).trim();
-    if (n < 100000)
-      return (
-        inWords(Math.floor(n / 1000)) +
-        " Thousand" +
-        (n % 1000 ? " " + inWords(n % 1000) : "")
-      ).trim();
-    if (n < 10000000)
-      return (
-        inWords(Math.floor(n / 100000)) +
-        " Lakh" +
-        (n % 100000 ? " " + inWords(n % 100000) : "")
-      ).trim();
-    return (
-      inWords(Math.floor(n / 10000000)) +
-      " Crore" +
-      (n % 10000000 ? " " + inWords(n % 10000000) : "")
-    ).trim();
+    if (n < 100) return (b[Math.floor(n / 10)] + (n % 10 ? " " + a[n % 10] : "")).trim();
+    if (n < 1000) return (a[Math.floor(n / 100)] + " Hundred" + (n % 100 ? " " + inWords(n % 100) : "")).trim();
+    if (n < 100000) return (inWords(Math.floor(n / 1000)) + " Thousand" + (n % 1000 ? " " + inWords(n % 1000) : "")).trim();
+    if (n < 10000000) return (inWords(Math.floor(n / 100000)) + " Lakh" + (n % 100000 ? " " + inWords(n % 100000) : "")).trim();
+    return (inWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 ? " " + inWords(n % 10000000) : "")).trim();
   }
 
-  return `${inWords(num)} Rupees Only /-`;
+  // Split integer and decimal part
+  const [integerPart, fractionPart] = num.toFixed(2).split(".");
+  let words = inWords(parseInt(integerPart)) + " Rupees";
+
+  if (parseInt(fractionPart) > 0) {
+    words += " and " + inWords(parseInt(fractionPart)) + " Paise";
+  }
+
+  return words + " Only /-";
 }
 
-
-    const wordsY = (doc.lastAutoTable?.finalY ?? 50) + 20;
-    doc.setFontSize(11);
-    doc.text(
-      `Amount in Words: ${toWords(report.netSalary) ?? "-"}`,
-      marginX,
-      wordsY
-    );
+// Usage in PDF
+const wordsY = (doc.lastAutoTable?.finalY ?? 50) + 20;
+doc.setFontSize(11);
+doc.text(
+  `Amount in Words: ${toWords(report.netSalary)}`,
+  marginX,
+  wordsY
+);
 
     
     const footerY = wordsY + 40;

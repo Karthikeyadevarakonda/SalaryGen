@@ -47,7 +47,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className={`min-h-screen ${colors.primary} ${colors.text} flex transition-colors duration-300`}>
+    <div className={`h-fit ${colors.primary} ${colors.text} flex transition-colors duration-300`}>
       
       <div className={`fixed top-0 left-0 right-0 ${colors.secondary} ${colors.border} border-b p-4 flex items-center justify-between md:hidden z-50 transition-colors duration-300`}>
         <button onClick={() => setSidebarOpen(true)} className={`${colors.textMuted} text-2xl`}>
