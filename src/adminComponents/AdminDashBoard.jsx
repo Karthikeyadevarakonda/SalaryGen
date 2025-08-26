@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { FaUserCog, FaBars, FaPowerOff } from "react-icons/fa";
-import { FiHome, FiUsers, FiBarChart2, FiSettings, FiPieChart } from "react-icons/fi";
+import { FiHome, FiUsers, FiBarChart2, FiSettings, FiPieChart, FiCheckSquare } from "react-icons/fi";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../contexts/ThemeContext";
 import ThemeToggle from "../components/ThemeToggle";
@@ -12,6 +12,7 @@ import SalaryComponents from "./SalaryComponents";
 import Dashboard from "./Dashboard";
 import Reports from "./Reports";
 import { useAuth } from "../contexts/AuthContext";
+import App from '../designingComponents/App'
 
 
 const AdminDashboard = () => {
@@ -36,7 +37,8 @@ const AdminDashboard = () => {
   };
 
   const menuItems = [
-    { path: "/adminDashboard", label: "Dashboard", icon: <FiHome /> },
+     { path: "/", label: "Home", icon: <FiHome /> },
+    { path: "/adminDashboard", label: "Dashboard", icon: <FiCheckSquare /> },
     { path: "/adminDashboard/manageUsers", label: "Manage Users", icon: <FiUsers /> },
     { path: "/adminDashboard/salaryComponents", label: "Salary Components", icon: <FiSettings /> },
     { path: "/adminDashboard/generateSalaries", label: "Generate Salaries", icon: <FiBarChart2 /> },
@@ -149,7 +151,9 @@ const AdminDashboard = () => {
 
        
         <Routes>
+       
           <Route index element={<Dashboard />} />
+          <Route path="/" element={<App />} /> 
           <Route path="manageUsers" element={<ManageUsers />} />
           <Route path="auditLogs" element={<AuditLogs />} />
           <Route path="salaryComponents" element={<SalaryComponents />} />
