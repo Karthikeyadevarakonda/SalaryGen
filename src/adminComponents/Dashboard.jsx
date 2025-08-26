@@ -286,12 +286,12 @@ const Dashboard = () => {
                   data={barData}
                   layout={isMobile ? "vertical" : "horizontal"}
                   margin={{
-                    top: 20,
+                    top: isMobile ? 0 : 20,
                     right: 20,
                     left: isMobile ? -15 : 0,
                     bottom: 5,
                   }}
-                  barCategoryGap={isMobile ? "5%" : "5%"}
+                  barCategoryGap={isMobile ? "7%" : "5%"}
                 >
                   <CartesianGrid
                     strokeDasharray="3 3"

@@ -81,7 +81,7 @@ const AdminDashboard = () => {
       >
         <button
           onClick={() => setSidebarOpen(true)}
-          className={`${colors.textMuted} text-2xl`}
+          className={`${isDarkMode ? "text-teal-400":"text-blue-400"} text-2xl`}
         >
           <FaBars />
         </button>
