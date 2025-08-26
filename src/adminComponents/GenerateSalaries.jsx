@@ -68,7 +68,7 @@ export default function GenerateSalaries() {
     : "bg-gradient-to-r from-blue-400 to-slate-200 hover:from-blue-300 hover:to-blue-100 text-slate-900";
 
   return (
-    <div className={`max-w-6xl h-screen mx-auto p-4 sm:p-6 ${textPrimary}`}>
+    <div className={`max-w-6xl h-fit mx-auto p-4 sm:p-6 ${textPrimary}`}>
       {errorMessage && (
         <div
           className={`fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-xl shadow-lg w-[90%] sm:w-auto z-50 text-center font-medium transition-all duration-500

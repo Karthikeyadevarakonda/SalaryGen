@@ -635,7 +635,7 @@ export default function Reports() {
   };
 
   return (
-    <div className="p-4 sm:p-6 grid gap-6">
+    <div className="p-4 sm:p-6 grid gap-6 h-fit">
       <div
         className={`p-4 sm:p-6 rounded-xl shadow-xl ${
           isDarkMode ? "bg-slate-900 border border-slate-700" : "bg-slate-100"

@@ -19,6 +19,8 @@ export default function AuditLogsShimmer() {
     bottom: 0,
   };
 
+  const headers = ["#", "User", "Action", "Entity", "Entity ID", "Date", "Time"];
+
   const TableSkeleton = () => (
     <div
       className={`overflow-x-auto rounded shadow-lg border ${
@@ -26,7 +28,7 @@ export default function AuditLogsShimmer() {
       } ${isDarkMode ? "bg-slate-800" : "bg-white"}`}
     >
       <table
-        className={`w-full text-sm text-left ${
+        className={`w-full text-xs sm:text-sm text-left ${
           isDarkMode ? "text-slate-300" : "text-slate-900"
         }`}
       >
@@ -38,19 +40,24 @@ export default function AuditLogsShimmer() {
           }`}
         >
           <tr>
-            {["#", "User", "Action", "Entity", "Entity ID", "Date", "Time"].map(
-              (_, idx) => (
-                <th key={idx} className="px-6 py-3">
-                  <div
-                    className={`h-6 rounded overflow-hidden relative ${
-                      isDarkMode ? "bg-slate-700" : "bg-white"
-                    }`}
-                  >
-                    <div style={shimmerStyle}></div>
-                  </div>
-                </th>
-              )
-            )}
+            {headers.map((header, idx) => (
+              <th
+                key={idx}
+                className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 ${
+                  // hide less important columns on small screens
+                  (header === "Entity ID" || header === "Date" || header === "Time") &&
+                  "hidden md:table-cell"
+                }`}
+              >
+                <div
+                  className={`h-5 sm:h-6 rounded overflow-hidden relative ${
+                    isDarkMode ? "bg-slate-700" : "bg-white"
+                  }`}
+                >
+                  <div style={shimmerStyle}></div>
+                </div>
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -65,19 +72,23 @@ export default function AuditLogsShimmer() {
                     : "border-slate-300 hover:bg-slate-200/50"
                 } transition-colors`}
               >
-                {Array(7)
-                  .fill("")
-                  .map((__, colIdx) => (
-                    <td key={colIdx} className="px-6 py-4">
-                      <div
-                        className={`h-6 rounded overflow-hidden relative ${
-                          isDarkMode ? "bg-slate-700" : "bg-white"
-                        }`}
-                      >
-                        <div style={shimmerStyle}></div>
-                      </div>
-                    </td>
-                  ))}
+                {headers.map((header, colIdx) => (
+                  <td
+                    key={colIdx}
+                    className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 ${
+                      (header === "Entity ID" || header === "Date" || header === "Time") &&
+                      "hidden md:table-cell"
+                    }`}
+                  >
+                    <div
+                      className={`h-5 sm:h-6 rounded overflow-hidden relative ${
+                        isDarkMode ? "bg-slate-700" : "bg-white"
+                      }`}
+                    >
+                      <div style={shimmerStyle}></div>
+                    </div>
+                  </td>
+                ))}
               </tr>
             ))}
         </tbody>

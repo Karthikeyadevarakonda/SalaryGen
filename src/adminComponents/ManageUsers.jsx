@@ -147,7 +147,7 @@ const StaffFormPanel = ({
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-full max-w-lg shadow-2xl border-l z-50 transform transition-transform duration-500 ease-in-out
+      className={`fixed top-0 right-0 w-full max-w-lg shadow-2xl border-l z-50 transform transition-transform duration-500 ease-in-out
         ${colors.primary} ${colors.border} 
         ${isOpen ? "translate-x-0" : "translate-x-full"}`}
     >

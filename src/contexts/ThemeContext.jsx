@@ -17,13 +17,13 @@ export const ThemeProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+  const themeClass = isDarkMode ? 'dark' : 'light';
+  localStorage.setItem('theme', themeClass);
+
+  document.documentElement.classList.remove('dark', 'light');
+  document.documentElement.classList.add(themeClass);
+}, [isDarkMode]);
+
 
   const toggleTheme = () => {
   const overlay = document.createElement("div");

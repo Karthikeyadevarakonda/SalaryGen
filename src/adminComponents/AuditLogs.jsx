@@ -101,7 +101,7 @@ export default function AuditLogs() {
   };
 
   return (
-    <div className="px-1 sm:px-6 sm:py-2 space-y-6">
+    <div className="px-1 sm:px-6 sm:py-2 space-y-6 ">
       <h2
         className={`text-xl bg-clip-text text-transparent ${
           isDarkMode

@@ -1,16 +1,25 @@
 @import "tailwindcss";
 
 
-.dark {
-  color-scheme: dark;
-}
 
-/* *{
-    outline: 1px solid red;
-} */
+
+@tailwind utilities;
+
 
 html, body {
+  @apply min-h-screen transition-colors duration-300;
   overflow-x: hidden;
+}
+
+/* Light mode */
+html.light {
+  @apply bg-white text-slate-900;
+}
+
+/* Dark mode */
+html.dark {
+  @apply bg-slate-900 text-white;
+  color-scheme: dark;
 }
 
 ::-webkit-scrollbar {
