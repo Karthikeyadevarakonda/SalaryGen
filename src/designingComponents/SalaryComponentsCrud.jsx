@@ -31,7 +31,6 @@ const fmtNum = (v) =>
     ? "NA"
     : Number(v);
 
-
 export default function SalaryComponentCrud({ baseUrl }) {
   const { theme, isDarkMode } = useTheme();
   const { get, post, put, del } = useApi(baseUrl);
